@@ -23,6 +23,11 @@ class FAQController extends Controller {
     public function index(Request $request): View | JsonResponse {
         if ($request->ajax()) {
             $data = FAQ::latest();
+            if (!empty($request->input('search.value'))) {
+                $searchTerm = $request->input('search.value');
+                $data->where('question', 'LIKE', "%$searchTerm%")
+                    ->orWhere('answer', 'LIKE', "%$searchTerm%");
+            }
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('question', function ($data) {
@@ -36,7 +41,7 @@ class FAQController extends Controller {
                     return '<span class="question-tooltip" style="cursor: pointer;" title="' . $answer . '">' . $shortAnswer . '</span>';
                 })
                 ->addColumn('status', function ($data) {
-                    $status = ' <div class="form-check form-switch" style="margin-left:40px;">';
+                    $status = ' <div class="form-check form-switch">';
                     $status .= ' <input onclick="showStatusChangeAlert(' . $data->id . ')" type="checkbox" class="form-check-input" id="customSwitch' . $data->id . '" getAreaid="' . $data->id . '" name="status"';
                     if ($data->status == "active") {
                         $status .= "checked";

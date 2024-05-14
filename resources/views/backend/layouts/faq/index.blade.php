@@ -6,7 +6,6 @@
     <link href="https://cdn.datatables.net/v/bs5/dt-2.0.2/datatables.min.css" rel="stylesheet">
 @endpush
 
-
 @section('content')
     {{--  ========== title-wrapper start ==========  --}}
     <div class="title-wrapper pt-30">
@@ -31,7 +30,6 @@
                                     Dashboard
                                 </a>
                             </li>
-                            {{-- <li><span><i class="lni lni-angle-double-right"></i></span>Settings</li> --}}
                             <li class="active"><span><i class="lni lni-angle-double-right"></i></span>FAQ</li>
                         </ol>
                     </nav>
@@ -48,7 +46,7 @@
                     <div class="d-flex justify-content-end mb-3">
                         <a href="{{ route('faq.create') }}" class="btn btn-primary">Add FAQ</a>
                     </div>
-                    <div class="table-responsive">
+                    <div class="table-wrapper table-responsive">
                         <table id="data-table" class="table">
                             <thead>
                                 <tr>
@@ -84,12 +82,13 @@
                 let dTable = $('#data-table').DataTable({
                     order: [],
                     lengthMenu: [
-                        [25, 50, 100, 200, 500, -1],
-                        [25, 50, 100, 200, 500, "All"]
+                        [10, 25, 50, 100, -1],
+                        [10, 25, 50, 100, "All"]
                     ],
                     processing: true,
                     responsive: true,
                     serverSide: true,
+
 
                     language: {
                         processing: `<div class="text-center">
@@ -132,7 +131,7 @@
                             data: 'status',
                             name: 'status',
                             orderable: true,
-                            searchable: true
+                            searchable: false
                         },
                         {
                             data: 'action',

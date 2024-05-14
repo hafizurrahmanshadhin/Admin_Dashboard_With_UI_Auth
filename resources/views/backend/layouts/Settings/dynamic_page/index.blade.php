@@ -47,7 +47,7 @@
                     <div class="d-flex justify-content-end mb-3">
                         <a href="{{ route('dynamic_page.create') }}" class="btn btn-primary">Add New Page</a>
                     </div>
-                    <div class="table-responsive">
+                    <div class="table-wrapper table-responsive">
                         <table id="data-table" class="table">
                             <thead>
                                 <tr>

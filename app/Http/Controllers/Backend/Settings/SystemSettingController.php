@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 class SystemSettingController extends Controller {
     public function index() {
         $setting = SystemSetting::latest('id')->first();
-        return view('backend.layouts.settings.system_settings', compact('setting'));
+        return view('backend.layouts.Settings.system_settings', compact('setting'));
     }
 
     public function update(Request $request) {

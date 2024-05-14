@@ -15,20 +15,19 @@ class DynamicPageController extends Controller {
     public function index(Request $request) {
         if ($request->ajax()) {
             $data = DynamicPage::latest();
+            if (!empty($request->input('search.value'))) {
+                $searchTerm = $request->input('search.value');
+                $data->where('page_title', 'LIKE', "%$searchTerm%");
+            }
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('page_title', function ($data) {
-                    $page_title = $data->page_title;
-                    $status     = '<p>' . $page_title . ' </p>';
-                    return $status;
-                })
                 ->addColumn('page_content', function ($data) {
-                    $page_content = $data->page_content;
-                    $status       = '<p>' . $page_content . ' </p>';
-                    return $status;
+                    $page_content       = $data->page_content;
+                    $short_page_content = strlen($page_content) > 100 ? substr($page_content, 0, 100) . '...' : $page_content;
+                    return '<p>' . $short_page_content . '</p>';
                 })
                 ->addColumn('status', function ($data) {
-                    $status = ' <div class="form-check form-switch" style="margin-left:40px;">';
+                    $status = ' <div class="form-check form-switch">';
                     $status .= ' <input onclick="showStatusChangeAlert(' . $data->id . ')" type="checkbox" class="form-check-input" id="customSwitch' . $data->id . '" getAreaid="' . $data->id . '" name="status"';
                     if ($data->status == "active") {
                         $status .= "checked";
@@ -47,7 +46,7 @@ class DynamicPageController extends Controller {
                             </a>
                             </div>';
                 })
-                ->rawColumns(['page_title', 'page_content', 'status', 'action'])
+                ->rawColumns(['page_content', 'status', 'action'])
                 ->make(true);
         }
         return view('backend.layouts.Settings.dynamic_page.index');

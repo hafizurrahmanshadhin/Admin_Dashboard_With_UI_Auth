@@ -3,10 +3,14 @@
 @section('title', 'System Settings')
 
 @push('style')
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css">
+    <link rel="stylesheet" href="{{ asset('backend/css/dropify.min.css') }}">
     <style>
         .ck-editor__editable[role="textbox"] {
             min-height: 150px;
+        }
+
+        .dropify-wrapper .dropify-render {
+            display: unset !important;
         }
     </style>
 @endpush
@@ -176,6 +180,7 @@
             $('.dropify').dropify();
         });
     </script>
+
     <script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/classic/ckeditor.js"></script>
     <script>
         ClassicEditor

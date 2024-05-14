@@ -25,19 +25,14 @@
     <main class="main-wrapper">
         @include('backend.partials.header')
 
-
-
         <section class="section">
             <div class="container-fluid">
                 @yield('content')
             </div>
         </section>
 
-
-
         @include('backend.partials.footer')
     </main>
-    @include('backend.partials.theme_option')
 
     @include('backend.partials.scripts')
 </body>
