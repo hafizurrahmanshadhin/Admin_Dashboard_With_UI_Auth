@@ -25,7 +25,8 @@
     <div class="error-container">
         <div class="error-box">
             <img class="mx-auto mb-20" src="{{ asset('backend/images/500.svg') }}" alt="error img">
-            <h1 class="fw-700 mb-15">You don't have the right roles.</h1>
+            <h1 class="fw-700 mb-15">The server encountered an unexpected condition that prevented it from fulfilling
+                the request.</h1>
 
             <div class="d-flex align-items-center justify-content-center gap-3">
                 <a href="{{ route('home') }}" class="main-btn primary-btn btn-hover">Go Home</a>
