@@ -52,9 +52,8 @@
                     </p>
                 </div>
             </div>
-            <!-- End Icon Cart -->
         </div>
-        <!-- End Col -->
+
         <div class="col-xl-3 col-lg-4 col-sm-6">
             <div class="icon-card mb-30">
                 <div class="icon success">
@@ -69,9 +68,8 @@
                     </p>
                 </div>
             </div>
-            <!-- End Icon Cart -->
         </div>
-        <!-- End Col -->
+
         <div class="col-xl-3 col-lg-4 col-sm-6">
             <div class="icon-card mb-30">
                 <div class="icon primary">
@@ -86,9 +84,8 @@
                     </p>
                 </div>
             </div>
-            <!-- End Icon Cart -->
         </div>
-        <!-- End Col -->
+
         <div class="col-xl-3 col-lg-4 col-sm-6">
             <div class="icon-card mb-30">
                 <div class="icon orange">
@@ -103,8 +100,6 @@
                     </p>
                 </div>
             </div>
-            <!-- End Icon Cart -->
         </div>
-        <!-- End Col -->
     </div>
 @endsection

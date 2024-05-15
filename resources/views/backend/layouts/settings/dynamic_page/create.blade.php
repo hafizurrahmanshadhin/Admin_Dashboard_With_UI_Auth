@@ -2,14 +2,6 @@
 
 @section('title', 'Create Dynamic Page')
 
-@push('style')
-    <style>
-        .ck-editor__editable[role="textbox"] {
-            min-height: 150px;
-        }
-    </style>
-@endpush
-
 @section('content')
     {{--  ========== title-wrapper start ==========  --}}
     <div class="title-wrapper pt-30">
@@ -87,7 +79,6 @@
 @endsection
 
 @push('script')
-    <script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/classic/ckeditor.js"></script>
     <script>
         ClassicEditor
             .create(document.querySelector('#page_content'))

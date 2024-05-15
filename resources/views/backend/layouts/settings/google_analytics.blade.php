@@ -5,7 +5,7 @@
 @push('style')
     <style>
         .ck-editor__editable[role="textbox"] {
-            min-height: 500px;
+            min-height: 500px !important;
         }
     </style>
 @endpush
@@ -75,7 +75,6 @@
 @endsection
 
 @push('script')
-    <script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/classic/ckeditor.js"></script>
     <script>
         ClassicEditor
             .create(document.querySelector('#description'))

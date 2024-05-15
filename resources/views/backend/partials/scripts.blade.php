@@ -6,6 +6,8 @@
 <script src="{{ asset('backend/js/datatables.min.js') }}"></script>
 <script src="{{ asset('backend/js/sweetalert2@11.js') }}"></script>
 <script src="{{ asset('backend/js/toastr.min.js') }}"></script>
+<script src="{{ asset('backend/js/dropify.min.js') }}"></script>
+<script src="{{ asset('backend/js/ckeditor.js') }}"></script>
 
 @stack('script')
 
@@ -97,3 +99,11 @@
     });
 </script>
 {{-- toastr end --}}
+
+{{-- dropify start --}}
+<script>
+    $(document).ready(function() {
+        $('.dropify').dropify();
+    });
+</script>
+{{-- dropify end --}}
