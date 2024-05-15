@@ -83,12 +83,6 @@ class ProfileController extends Controller {
                 }
             }
 
-            // if ($request->hasFile('profile_picture')) {
-            //     $image     = $request->file('profile_picture');
-            //     $imageName = time() . '.' . $image->getClientOriginalExtension();
-            //     $image->move(public_path('uploads/profile_pictures'), $imageName);
-            //     $userDetails->profile_picture = 'uploads/profile_pictures/' . $imageName;
-            // }
             if ($request->hasFile('profile_picture')) {
                 $image                        = $request->file('profile_picture');
                 $imageName                    = Helper::fileUpload($image, 'profile_pictures', time());
@@ -101,7 +95,7 @@ class ProfileController extends Controller {
                 'success'   => true,
                 'image_url' => asset($userDetails->profile_picture),
             ]);
-        } catch (Exception $e) {
+        } catch (Exception) {
             return response()->json([
                 'success' => false,
                 'message' => 'An error occurred while uploading the profile picture.',

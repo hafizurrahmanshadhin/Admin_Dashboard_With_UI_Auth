@@ -2,7 +2,6 @@
 
 namespace App\Helpers;
 
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 
 class Helper {

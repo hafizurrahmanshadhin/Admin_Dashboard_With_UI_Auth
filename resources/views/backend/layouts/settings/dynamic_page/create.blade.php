@@ -1,6 +1,14 @@
 @extends('backend.app')
 
-@section('title', 'Stripe Settings')
+@section('title', 'Create Dynamic Page')
+
+@push('style')
+    <style>
+        .ck-editor__editable[role="textbox"] {
+            min-height: 150px;
+        }
+    </style>
+@endpush
 
 @section('content')
     {{--  ========== title-wrapper start ==========  --}}
@@ -8,7 +16,7 @@
         <div class="row align-items-center">
             <div class="col-md-6">
                 <div class="title">
-                    <h2>Stripe Settings</h2>
+                    <h2>Create New Page</h2>
                 </div>
             </div>
 
@@ -27,7 +35,7 @@
                                 </a>
                             </li>
                             <li><span><i class="lni lni-angle-double-right"></i></span>Settings</li>
-                            <li class="active"><span><i class="lni lni-angle-double-right"></i></span>Stripe Setting</li>
+                            <li class="active"><span><i class="lni lni-angle-double-right"></i></span>Dynamic Pages</li>
                         </ol>
                     </nav>
                 </div>
@@ -40,14 +48,14 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card-style mb-4">
-                    <form method="POST" action="{{ route('stripe.update') }}">
+                    <form method="POST" action="{{ route('dynamic_page.store') }}">
                         @csrf
                         <div class="input-style-1">
-                            <label for="stripe_key">STRIPE KEY:</label>
-                            <input type="text" placeholder="Enter stripe key" id="stripe_key"
-                                class="form-control @error('stripe_key') is-invalid @enderror" name="stripe_key"
-                                value="{{ env('STRIPE_KEY') }}" />
-                            @error('stripe_key')
+                            <label for="page_title">Title:</label>
+                            <input type="text" placeholder="Enter Title" id="page_title"
+                                class="form-control @error('page_title') is-invalid @enderror" name="page_title"
+                                value="{{ old('page_title') }}" />
+                            @error('page_title')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -55,11 +63,12 @@
                         </div>
 
                         <div class="input-style-1">
-                            <label for="stripe_secret">STRIPE_SECRET:</label>
-                            <input type="text" placeholder="Enter stripe secret" id="stripe_secret"
-                                class="form-control @error('stripe_secret') is-invalid @enderror" name="stripe_secret"
-                                value="{{ env('STRIPE_SECRET') }}" />
-                            @error('stripe_secret')
+                            <label for="page_content">Content:</label>
+                            <textarea placeholder="Type here..." id="page_content" name="page_content"
+                                class="form-control @error('page_content') is-invalid @enderror">
+                                {{ old('page_content') }}
+                            </textarea>
+                            @error('page_content')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -68,7 +77,7 @@
 
                         <div class="col-12">
                             <button type="submit" class="btn btn-primary">Submit</button>
-                            <a href="{{ route('dashboard') }}" class="btn btn-danger me-2">Cancel</a>
+                            <a href="{{ route('dynamic_page.index') }}" class="btn btn-danger me-2">Cancel</a>
                         </div>
                     </form>
                 </div>
@@ -76,3 +85,14 @@
         </div>
     </div>
 @endsection
+
+@push('script')
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#page_content'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+@endpush

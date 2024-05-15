@@ -3,6 +3,9 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
@@ -11,7 +14,7 @@ class Handler extends ExceptionHandler {
     /**
      * A list of exception types with their corresponding custom log levels.
      *
-     * @var array<class-string<\Throwable>, \Psr\Log\LogLevel::*>
+     * @var array<class-string<Throwable>, \Psr\Log\LogLevel::*>
      */
     protected $levels = [
         //
@@ -20,7 +23,7 @@ class Handler extends ExceptionHandler {
     /**
      * A list of the exception types that are not reported.
      *
-     * @var array<int, class-string<\Throwable>>
+     * @var array<int, class-string<Throwable>>
      */
     protected $dontReport = [
         //
@@ -46,21 +49,22 @@ class Handler extends ExceptionHandler {
         });
     }
 
-    public function render($request, Throwable $exception) {
-        if ($exception instanceof NotFoundHttpException) {
+    public function render($request, Throwable $e): Response|JsonResponse|\Symfony\Component\HttpFoundation\Response|RedirectResponse
+    {
+        if ($e instanceof NotFoundHttpException) {
             return response()->view('backend.layouts.Settings.errors.404', [], 404);
         }
 
-        if ($exception instanceof HttpException) {
-            if ($exception->getStatusCode() == 403) {
+        if ($e instanceof HttpException) {
+            if ($e->getStatusCode() == 403) {
                 return response()->view('backend.layouts.Settings.errors.403', [], 403);
             }
 
-            if ($exception->getStatusCode() == 500) {
+            if ($e->getStatusCode() == 500) {
                 return response()->view('backend.layouts.Settings.errors.500', [], 500);
             }
         }
 
-        return parent::render($request, $exception);
+        return parent::render($request, $e);
     }
 }

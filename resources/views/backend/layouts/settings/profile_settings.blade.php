@@ -1,6 +1,6 @@
 @extends('backend.app')
 
-@section('title', 'Profile Settings')
+@section('title', 'Profile settings')
 
 @section('content')
     {{--  ========== title-wrapper start ==========  --}}
@@ -173,7 +173,7 @@
     <script>
         $(document).ready(function() {
             $('#profile_picture_input').change(function() {
-                var formData = new FormData();
+                const formData = new FormData();
                 formData.append('profile_picture', $(this)[0].files[0]);
                 formData.append('_token', '{{ csrf_token() }}');
 

@@ -81,7 +81,6 @@
         top: -0.3em;
         float: right;
         font-size: 20px;
-        -webkit-text-shadow: 0 1px 0 #ffffff;
         text-shadow: 0 1px 0 #ffffff;
         opacity: 0.8;
         -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);

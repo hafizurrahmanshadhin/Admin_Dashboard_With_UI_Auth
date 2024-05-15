@@ -47,14 +47,14 @@ class DynamicPageController extends Controller {
                             </div>';
                 })
                 ->rawColumns(['page_content', 'status', 'action'])
-                ->make(true);
+                ->make();
         }
-        return view('backend.layouts.Settings.dynamic_page.index');
+        return view('backend.layouts.settings.dynamic_page.index');
     }
 
     public function create() {
         if (User::find(auth()->user()->id)->hasPermissionTo('dynamic_page')) {
-            return view('backend.layouts.Settings.dynamic_page.create');
+            return view('backend.layouts.settings.dynamic_page.create');
         }
     }
 
@@ -77,7 +77,7 @@ class DynamicPageController extends Controller {
                 $data->save();
             }
             return redirect()->route('dynamic_page.index')->with('t-success', 'Dynamic Page created successfully.');
-        } catch (Exception $e) {
+        } catch (Exception) {
             return redirect()->route('dynamic_page.index')->with('t-error', 'Dynamic Page failed created.');
         }
     }
@@ -85,7 +85,7 @@ class DynamicPageController extends Controller {
     public function edit($id) {
         if (User::find(auth()->user()->id)->hasPermissionTo('dynamic_page')) {
             $data = DynamicPage::find($id);
-            return view('backend.layouts.Settings.dynamic_page.edit', compact('data'));
+            return view('backend.layouts.settings.dynamic_page.edit', compact('data'));
         }
     }
 
@@ -109,7 +109,7 @@ class DynamicPageController extends Controller {
 
                 return redirect()->route('dynamic_page.index')->with('t-success', 'Dynamic Page Updated Successfully.');
             }
-        } catch (Exception $e) {
+        } catch (Exception) {
             return redirect()->route('dynamic_page.index')->with('t-error', 'Dynamic Page failed to update');
         }
     }

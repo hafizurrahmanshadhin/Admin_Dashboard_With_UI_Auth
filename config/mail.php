@@ -104,7 +104,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Markdown Mail Settings
+    | Markdown Mail settings
     |--------------------------------------------------------------------------
     |
     | If you are using Markdown based email rendering, you may configure your

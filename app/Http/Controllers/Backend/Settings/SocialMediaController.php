@@ -16,7 +16,6 @@ class SocialMediaController extends Controller {
     }
 
     public function update(Request $request) {
-        // Validate the request
         $validator = Validator::make($request->all(), [
             'social_media.*'    => 'required|string',
             'profile_link.*'    => 'required|url',
@@ -48,7 +47,7 @@ class SocialMediaController extends Controller {
             SocialMedia::whereIn('id', $idsToUpdate)->delete();
 
             return back()->with('t-success', 'Social media links updated successfully.');
-        } catch (Exception $e) {
+        } catch (Exception) {
             return back()->with('t-error', 'Social media links failed update.');
         }
     }

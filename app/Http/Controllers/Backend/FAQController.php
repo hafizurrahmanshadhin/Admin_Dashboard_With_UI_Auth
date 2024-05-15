@@ -156,7 +156,7 @@ class FAQController extends Controller {
             $data->status = 'inactive';
             $data->save();
             return response()->json([
-                'error'   => false,
+                't-error'   => false,
                 'message' => 'Unpublished Successfully.',
                 'data'    => $data,
             ]);
@@ -164,7 +164,7 @@ class FAQController extends Controller {
             $data->status = 'active';
             $data->save();
             return response()->json([
-                'success' => true,
+                't-success' => true,
                 'message' => 'Published Successfully.',
                 'data'    => $data,
             ]);
@@ -181,7 +181,7 @@ class FAQController extends Controller {
         $faq = FAQ::findOrFail($id);
         $faq->delete();
         return response()->json([
-            'success' => true,
+            't-success' => true,
             'message' => 'Deleted successfully.',
         ]);
     }

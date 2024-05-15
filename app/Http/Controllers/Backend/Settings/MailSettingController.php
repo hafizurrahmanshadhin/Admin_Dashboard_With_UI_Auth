@@ -19,13 +19,13 @@ class MailSettingController extends Controller {
     public function update(Request $request) {
         if (User::find(auth()->user()->id)->hasPermissionTo('mail_setting')) {
             $request->validate([
-                'mail_mailer'       => 'required|string',
-                'mail_host'         => 'required|string',
-                'mail_port'         => 'required|string',
+                'mail_mailer'       => 'nullable|string',
+                'mail_host'         => 'nullable|string',
+                'mail_port'         => 'nullable|string',
                 'mail_username'     => 'nullable|string',
                 'mail_password'     => 'nullable|string',
                 'mail_encryption'   => 'nullable|string',
-                'mail_from_address' => 'required|string',
+                'mail_from_address' => 'nullable|string',
             ]);
             try {
                 $envContent = File::get(base_path('.env'));
@@ -52,7 +52,7 @@ class MailSettingController extends Controller {
                     File::put(base_path('.env'), $envContent);
                 }
                 return back()->with('t-success', 'Updated successfully');
-            } catch (Exception $e) {
+            } catch (Exception) {
                 return back()->with('t-error', 'Failed to update');
             }
         }

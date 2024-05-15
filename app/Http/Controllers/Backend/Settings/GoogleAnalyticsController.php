@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 class GoogleAnalyticsController extends Controller {
     public function index() {
         $analytics = GoogleAnalytics::latest('id')->first();
-        return view('backend.layouts.Settings.google_analytics', compact('analytics'));
+        return view('backend.layouts.settings.google_analytics', compact('analytics'));
     }
 
     public function update(Request $request) {
@@ -28,7 +28,7 @@ class GoogleAnalyticsController extends Controller {
 
             $setting->save();
             return back()->with('t-success', 'Updated successfully');
-        } catch (Exception $e) {
+        } catch (Exception) {
             return back()->with('t-error', 'Failed to update');
         }
     }

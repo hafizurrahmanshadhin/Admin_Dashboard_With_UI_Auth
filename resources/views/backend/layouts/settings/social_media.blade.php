@@ -1,15 +1,14 @@
 @extends('backend.app')
 
-@section('title', 'Social Media Settings')
+@section('title', 'Social Media settings')
 
 @push('style')
     <style>
         .drop-custom {
-            border: 1px solid;
             border-top-left-radius: 6px;
             border-bottom-left-radius: 6px;
             padding: 10px;
-            border-color: #788393;
+            border: 1px solid #788393;
             color: #788393;
         }
     </style>
@@ -86,7 +85,7 @@
                                             {{ $link->social_media == 'threads' ? 'selected' : '' }}>Threads
                                         </option>
                                     </select>
-                                    <input type="url" class="form-control"aria-label="Text input with dropdown button"
+                                    <input type="url" class="form-control" aria-label="Text input with dropdown button"
                                         name="profile_link[]"
                                         value="@isset($social_link){{ $link->profile_link }}@endisset">
                                     <button class="btn btn-outline-secondary removeSocialBtn" type="button"
@@ -109,13 +108,13 @@
 
 @push('script')
     <script>
-        var socialFieldsCount = $('#social_media_container .social_media').length;
+        let socialFieldsCount = $('#social_media_container .social_media').length;
 
         function addSocialField() {
-            var socialFieldsContainer = document.getElementById("social_media_container");
+            const socialFieldsContainer = document.getElementById("social_media_container");
 
             if (socialFieldsCount < 6) {
-                var newSocialField = document.createElement("div");
+                const newSocialField = document.createElement("div");
                 newSocialField.className = "social_media input-group mb-3";
                 newSocialField.innerHTML =
                     `
@@ -149,16 +148,16 @@
 
 
         function removeSocialField(button) {
-            var socialField = button.parentElement;
+            const socialField = button.parentElement;
             socialField.remove();
             socialFieldsCount--;
             checkForDuplicateSocialMedia();
         }
 
         function checkForDuplicateSocialMedia() {
-            var allSelections = document.querySelectorAll('select[name="social_media[]"]');
-            var allValues = Array.from(allSelections).map(select => select.value);
-            var hasDuplicate = allValues.some((value, index) => allValues.indexOf(value) !== index && value !==
+            const allSelections = document.querySelectorAll('select[name="social_media[]"]');
+            const allValues = Array.from(allSelections).map(select => select.value);
+            const hasDuplicate = allValues.some((value, index) => allValues.indexOf(value) !== index && value !==
                 "Select Social");
 
             if (hasDuplicate) {
@@ -177,7 +176,7 @@
         }
 
         window.removeSocialField = function(button) {
-            var socialLinkId = $(button).data('id');
+            const socialLinkId = $(button).data('id');
 
             $.ajax({
                 headers: {
@@ -204,6 +203,6 @@
                     console.error(xhr.responseText);
                 }
             });
-        };;
+        };
     </script>
 @endpush

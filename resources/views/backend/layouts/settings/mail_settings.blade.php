@@ -1,19 +1,6 @@
 @extends('backend.app')
 
-@section('title', 'System Settings')
-
-@push('style')
-    <link rel="stylesheet" href="{{ asset('backend/css/dropify.min.css') }}">
-    <style>
-        .ck-editor__editable[role="textbox"] {
-            min-height: 150px;
-        }
-
-        .dropify-wrapper .dropify-render {
-            display: unset !important;
-        }
-    </style>
-@endpush
+@section('title', 'Mail settings')
 
 @section('content')
     {{--  ========== title-wrapper start ==========  --}}
@@ -21,7 +8,7 @@
         <div class="row align-items-center">
             <div class="col-md-6">
                 <div class="title">
-                    <h2>System Settings</h2>
+                    <h2>Mail Settings</h2>
                 </div>
             </div>
 
@@ -31,8 +18,8 @@
                         <ol class="base-breadcrumb breadcrumb-three">
                             <li>
                                 <a href="{{ route('dashboard') }}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                                        fill="currentColor" viewBox="0 0 16 16">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                                        viewBox="0 0 16 16">
                                         <path
                                             d="M8 0a8 8 0 1 0 4.596 14.104A5.934 5.934 0 0 1 8 13a5.934 5.934 0 0 1-4.596-2.104A7.98 7.98 0 0 0 8 0zm-2 3a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm-1.465 5.682A3.976 3.976 0 0 0 4 9c0 1.044.324 2.01.882 2.818a6 6 0 1 1 6.236 0A3.975 3.975 0 0 0 12 9a3.976 3.976 0 0 0-.536-1.318l-1.898.633-.018-.056 2.194-.732a4 4 0 1 0-7.6 0l2.194.733-.018.056-1.898-.634z" />
                                     </svg>
@@ -40,7 +27,7 @@
                                 </a>
                             </li>
                             <li><span><i class="lni lni-angle-double-right"></i></span>Settings</li>
-                            <li class="active"><span><i class="lni lni-angle-double-right"></i></span>System Setting</li>
+                            <li class="active"><span><i class="lni lni-angle-double-right"></i></span>Mail Setting</li>
                         </ol>
                     </nav>
                 </div>
@@ -53,16 +40,16 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card-style mb-4">
-                    <form method="POST" action="{{ route('system.update') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('mail.update') }}">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="input-style-1">
-                                    <label for="title">Title:</label>
-                                    <input type="text" placeholder="Enter Title" id="title"
-                                        class="form-control @error('title') is-invalid @enderror" name="title"
-                                        value="{{ $setting->title ?? '' }}" />
-                                    @error('title')
+                                    <label for="mail_mailer">MAIL MAILER:</label>
+                                    <input type="text" placeholder="Enter mail mailer" id="mail_mailer"
+                                        class="form-control @error('mail_mailer') is-invalid @enderror" name="mail_mailer"
+                                        value="{{ env('MAIL_MAILER') }}" />
+                                    @error('mail_mailer')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -72,27 +59,11 @@
 
                             <div class="col-md-6">
                                 <div class="input-style-1">
-                                    <label for="email">Email:</label>
-                                    <input type="email" placeholder="Enter Email" id="email"
-                                        class="form-control @error('email') is-invalid @enderror" name="email"
-                                        value="{{ $setting->email ?? '' }}" />
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="input-style-1">
-                                    <label for="system_name">System Name:</label>
-                                    <input type="text" placeholder="System Name" id="system_name"
-                                        class="form-control @error('system_name') is-invalid @enderror" name="system_name"
-                                        value="{{ $setting->system_name ?? '' }}" />
-                                    @error('system_name')
+                                    <label for="mail_host">MAIL HOST:</label>
+                                    <input type="text" placeholder="Enter mail host" id="mail_host"
+                                        class="form-control @error('mail_host') is-invalid @enderror" name="mail_host"
+                                        value="{{ env('MAIL_HOST') }}" />
+                                    @error('mail_host')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -102,27 +73,11 @@
 
                             <div class="col-md-6">
                                 <div class="input-style-1">
-                                    <label for="copyright_text">Copy Rights Text:</label>
-                                    <input type="text" placeholder="Copy Rights Text" id="copyright_text"
-                                        class="form-control @error('copyright_text') is-invalid @enderror"
-                                        name="copyright_text" value="{{ $setting->copyright_text ?? '' }}" />
-                                    @error('copyright_text')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="input-style-1">
-                                    <label for="logo">Logo:</label>
-                                    <input type="file" class="dropify @error('logo') is-invalid @enderror" name="logo"
-                                        id="logo"
-                                        data-default-file="@isset($setting){{ asset($setting->logo) }}@endisset" />
-                                    @error('logo')
+                                    <label for="mail_port">MAIL PORT:</label>
+                                    <input type="text" placeholder="Enter mail port" id="mail_port"
+                                        class="form-control @error('mail_port') is-invalid @enderror" name="mail_port"
+                                        value="{{ env('MAIL_PORT') }}" />
+                                    @error('mail_port')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -132,28 +87,53 @@
 
                             <div class="col-md-6">
                                 <div class="input-style-1">
-                                    <label for="favicon">Favicon:</label>
-                                    <input type="file" class="dropify @error('favicon') is-invalid @enderror"
-                                        name="favicon" id="favicon"
-                                        data-default-file="@isset($setting){{ asset($setting->favicon) }}@endisset" />
-                                    @error('favicon')
+                                    <label for="mail_username">MAIL USERNAME:</label>
+                                    <input type="text" placeholder="Enter mail username" id="mail_username"
+                                        class="form-control @error('mail_username') is-invalid @enderror"
+                                        name="mail_username" value="{{ env('MAIL_USERNAME') }}" />
+                                    @error('mail_username')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-12">
+                            <div class="col-md-6">
                                 <div class="input-style-1">
-                                    <label for="description">About System:</label>
-                                    <textarea placeholder="Type here..." id="description" name="description"
-                                        class="form-control @error('description') is-invalid @enderror">
-                                        {{ $setting->description ?? '' }}
-                                    </textarea>
-                                    @error('description')
+                                    <label for="mail_password">MAIL PASSWORD:</label>
+                                    <input type="text" placeholder="Enter mail password" id="mail_password"
+                                        class="form-control @error('mail_password') is-invalid @enderror"
+                                        name="mail_password" value="{{ env('MAIL_PASSWORD') }}" />
+                                    @error('mail_password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="input-style-1">
+                                    <label for="mail_encryption">MAIL ENCRYPTION:</label>
+                                    <input type="text" placeholder="Enter mail encryption" id="mail_encryption"
+                                        class="form-control @error('mail_encryption') is-invalid @enderror"
+                                        name="mail_encryption" value="{{ env('MAIL_ENCRYPTION') }}" />
+                                    @error('mail_encryption')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="input-style-1">
+                                    <label for="mail_from_address">MAIL FROM ADDRESS:</label>
+                                    <input type="text" placeholder="Enter mail from address" id="mail_from_address"
+                                        class="form-control @error('mail_from_address') is-invalid @enderror"
+                                        name="mail_from_address" value="{{ env('MAIL_FROM_ADDRESS') }}" />
+                                    @error('mail_from_address')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -172,21 +152,3 @@
         </div>
     </div>
 @endsection
-
-@push('script')
-    <script type="text/javascript" src="https://jeremyfagis.github.io/dropify/dist/js/dropify.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.dropify').dropify();
-        });
-    </script>
-
-    <script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/classic/ckeditor.js"></script>
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#description'))
-            .catch(error => {
-                console.error(error);
-            });
-    </script>
-@endpush

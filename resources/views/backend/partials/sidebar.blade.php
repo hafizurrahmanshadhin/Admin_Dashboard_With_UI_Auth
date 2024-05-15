@@ -3,20 +3,16 @@
 
     function isActiveRoute($routeNames, $output = 'active')
     {
-        foreach ((array) $routeNames as $routeName) {
-            if (Route::currentRouteName() == $routeName) {
-                return $output;
-            }
+        if (in_array(Route::currentRouteName(), (array)$routeNames)) {
+            return $output;
         }
         return null;
     }
 
     function areActiveRoutes($routeNames, $output = 'active')
     {
-        foreach ((array) $routeNames as $routeName) {
-            if (Route::currentRouteName() == $routeName) {
-                return $output;
-            }
+        if (in_array(Route::currentRouteName(), (array)$routeNames)) {
+            return $output;
         }
         return null;
     }
@@ -77,12 +73,12 @@
 
             <li
                 class="nav-item nav-item-has-children {{ areActiveRoutes(['profile.setting', 'system.index', 'mail.setting', 'social.index', 'dynamic_page.index', 'stripe.index', 'analytics.index'], 'active show') }}">
-                <a href="#0" data-bs-toggle="collapse" data-bs-target="#settings" aria-controls="settings"
+                <a href="#" data-bs-toggle="collapse" data-bs-target="#settings" aria-controls="settings"
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                        <svg xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" x="0" y="0"
-                            viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve"
+                            viewBox="0 0 512 512" xml:space="preserve"
                             class="">
                             <g>
                                 <linearGradient id="a" x1="256" x2="256" y1="512"
@@ -112,9 +108,9 @@
                     <li>
                         <a href="{{ route('profile.setting') }}" class="{{ isActiveRoute(['profile.setting']) }}">
                             <span class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                <svg xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" x="0" y="0"
-                                    viewBox="0 0 64 64" style="enable-background:new 0 0 512 512" xml:space="preserve"
+                                    viewBox="0 0 64 64" xml:space="preserve"
                                     class="">
                                     <g>
                                         <path fill="#ffeed1" fill-rule="evenodd"
@@ -169,9 +165,9 @@
                     <li>
                         <a href="{{ route('system.index') }}" class="{{ isActiveRoute(['system.index']) }}">
                             <span class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                <svg xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" x="0"
-                                    y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512"
+                                    y="0" viewBox="0 0 512 512"
                                     xml:space="preserve" class="">
                                     <g>
                                         <path fill="#23a8fe" fill-rule="evenodd"
@@ -220,9 +216,9 @@
                     <li>
                         <a href="{{ route('mail.setting') }}" class="{{ isActiveRoute(['mail.setting']) }}">
                             <span class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                <svg xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" x="0"
-                                    y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512"
+                                    y="0" viewBox="0 0 512 512"
                                     xml:space="preserve" class="">
                                     <g>
                                         <linearGradient id="a" x1="0" x2="512" y1="256"
@@ -251,9 +247,9 @@
                     <li>
                         <a href="{{ route('social.index') }}" class="{{ isActiveRoute(['social.index']) }}">
                             <span class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                <svg xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" x="0"
-                                    y="0" viewBox="0 0 512.003 512.003" style="enable-background:new 0 0 512 512"
+                                    y="0" viewBox="0 0 512.003 512.003"
                                     xml:space="preserve" class="">
                                     <g>
                                         <path
@@ -279,9 +275,9 @@
                         <a href="{{ route('dynamic_page.index') }}"
                             class="{{ isActiveRoute(['dynamic_page.index', 'dynamic_page.create', 'dynamic_page.edit']) }}">
                             <span class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                <svg xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" x="0"
-                                    y="0" viewBox="0 0 511.999 511.999" style="enable-background:new 0 0 512 512"
+                                    y="0" viewBox="0 0 511.999 511.999"
                                     xml:space="preserve" class="">
                                     <g>
                                         <path
@@ -316,9 +312,9 @@
                     <li>
                         <a href="{{ route('stripe.index') }}" class="{{ isActiveRoute(['stripe.index']) }}">
                             <span class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                <svg xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" x="0"
-                                    y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512"
+                                    y="0" viewBox="0 0 512 512"
                                     xml:space="preserve" class="">
                                     <g>
                                         <circle cx="256" cy="256" r="256" fill="#000000" opacity="1"
@@ -338,9 +334,9 @@
                     <li>
                         <a href="{{ route('analytics.index') }}" class="{{ isActiveRoute(['analytics.index']) }}">
                             <span class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                <svg xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" x="0"
-                                    y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512"
+                                    y="0" viewBox="0 0 512 512"
                                     xml:space="preserve" class="">
                                     <g>
                                         <path

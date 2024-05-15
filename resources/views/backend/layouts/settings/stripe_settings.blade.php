@@ -1,14 +1,6 @@
 @extends('backend.app')
 
-@section('title', 'Update Dynamic Page')
-
-@push('style')
-    <style>
-        .ck-editor__editable[role="textbox"] {
-            min-height: 150px;
-        }
-    </style>
-@endpush
+@section('title', 'Stripe settings')
 
 @section('content')
     {{--  ========== title-wrapper start ==========  --}}
@@ -16,7 +8,7 @@
         <div class="row align-items-center">
             <div class="col-md-6">
                 <div class="title">
-                    <h2>Update Page Content</h2>
+                    <h2>Stripe Settings</h2>
                 </div>
             </div>
 
@@ -35,7 +27,7 @@
                                 </a>
                             </li>
                             <li><span><i class="lni lni-angle-double-right"></i></span>Settings</li>
-                            <li class="active"><span><i class="lni lni-angle-double-right"></i></span>Dynamic Pages</li>
+                            <li class="active"><span><i class="lni lni-angle-double-right"></i></span>Stripe Setting</li>
                         </ol>
                     </nav>
                 </div>
@@ -48,14 +40,14 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card-style mb-4">
-                    <form method="POST" action="{{ route('dynamic_page.update', ['id' => $data->id]) }}">
+                    <form method="POST" action="{{ route('stripe.update') }}">
                         @csrf
                         <div class="input-style-1">
-                            <label for="page_title">Title:</label>
-                            <input type="text" placeholder="Enter Title" id="page_title"
-                                class="form-control @error('page_title') is-invalid @enderror" name="page_title"
-                                value="{{ $data->page_title }}" value="{{ old('page_title', $data->page_title) }}" />
-                            @error('page_title')
+                            <label for="stripe_key">STRIPE KEY:</label>
+                            <input type="text" placeholder="Enter stripe key" id="stripe_key"
+                                class="form-control @error('stripe_key') is-invalid @enderror" name="stripe_key"
+                                value="{{ env('STRIPE_KEY') }}" />
+                            @error('stripe_key')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -63,12 +55,11 @@
                         </div>
 
                         <div class="input-style-1">
-                            <label for="page_content">Content:</label>
-                            <textarea placeholder="Type here..." id="page_content" name="page_content"
-                                class="form-control @error('page_content') is-invalid @enderror">
-                                {{ old('page_content', $data->page_content) }}
-                            </textarea>
-                            @error('page_content')
+                            <label for="stripe_secret">STRIPE_SECRET:</label>
+                            <input type="text" placeholder="Enter stripe secret" id="stripe_secret"
+                                class="form-control @error('stripe_secret') is-invalid @enderror" name="stripe_secret"
+                                value="{{ env('STRIPE_SECRET') }}" />
+                            @error('stripe_secret')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -85,14 +76,3 @@
         </div>
     </div>
 @endsection
-
-@push('script')
-    <script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/classic/ckeditor.js"></script>
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#page_content'))
-            .catch(error => {
-                console.error(error);
-            });
-    </script>
-@endpush

@@ -6,17 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Throwable;
 
 class StripeSettingController extends Controller {
     public function index() {
-        return view('backend.layouts.Settings.stripe_settings');
+        return view('backend.layouts.settings.stripe_settings');
     }
 
     public function update(Request $request) {
         if (User::find(auth()->user()->id)->hasPermissionTo('profile setting')) {
             $request->validate([
-                'stripe_key'    => 'required|string',
-                'stripe_secret' => 'required|string',
+                'stripe_key'    => 'nullable|string',
+                'stripe_secret' => 'nullable|string',
             ]);
             try {
                 $envContent = File::get(base_path('.env'));
@@ -33,7 +34,7 @@ class StripeSettingController extends Controller {
                     File::put(base_path('.env'), $envContent);
                 }
                 return redirect()->back()->with('t-success', 'Stripe Setting Update successfully.');
-            } catch (\Throwable $th) {
+            } catch (Throwable) {
                 return redirect()->back()->with('t-error', 'Stripe Setting Update Failed');
             }
         }

@@ -26,7 +26,7 @@
                                     Dashboard
                                 </a>
                             </li>
-                            {{-- <li><span><i class="lni lni-angle-double-right"></i></span>Settings</li> --}}
+                            {{-- <li><span><i class="lni lni-angle-double-right"></i></span>settings</li> --}}
                             <li class="active"><span><i class="lni lni-angle-double-right"></i></span>Calendar</li>
                         </ol>
                     </nav>
@@ -48,8 +48,8 @@
 @push('script')
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            var calendarFullEl = document.getElementById("calendar-full");
-            var calendarFull = new FullCalendar.Calendar(calendarFullEl, {
+            const calendarFullEl = document.getElementById("calendar-full");
+            const calendarFull = new FullCalendar.Calendar(calendarFullEl, {
                 initialView: "dayGridMonth",
                 headerToolbar: {
                     end: "today prev,next",
