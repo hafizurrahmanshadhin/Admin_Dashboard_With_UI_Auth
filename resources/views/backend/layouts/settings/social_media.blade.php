@@ -125,7 +125,7 @@
                 <option class="dropdown-item" value="twitter">Twitter</option>
                 <option class="dropdown-item" value="tiktok">Tiktok</option>
                 <option class="dropdown-item" value="youtube">YouTube</option>
-
+                <option class="dropdown-item" value="threads">Threads</option>
             </select>
             <input type="url" class="form-control" aria-label="Text input with dropdown button" name="profile_link[]">
             <button class="btn btn-outline-secondary" type="button" onclick="removeSocialField(this)" style="font-weight: 900">Remove</button>`;

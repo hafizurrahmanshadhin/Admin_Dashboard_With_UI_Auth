@@ -6,13 +6,23 @@ use App\Http\Controllers\Controller;
 use App\Models\DynamicPage;
 use App\Models\User;
 use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 use Yajra\DataTables\DataTables;
 
 class DynamicPageController extends Controller {
-    public function index(Request $request) {
+    /**
+     * Display a listing of the dynamic pages.
+     *
+     * @param Request $request
+     * @return View|JsonResponse
+     * @throws Exception
+     */
+    public function index(Request $request): View | JsonResponse {
         if ($request->ajax()) {
             $data = DynamicPage::latest();
             if (!empty($request->input('search.value'))) {
@@ -52,13 +62,25 @@ class DynamicPageController extends Controller {
         return view('backend.layouts.settings.dynamic_page.index');
     }
 
-    public function create() {
+    /**
+     * Show the form for creating a new dynamic page.
+     *
+     * @return View|RedirectResponse
+     */
+    public function create(): View | RedirectResponse {
         if (User::find(auth()->user()->id)->hasPermissionTo('dynamic_page')) {
             return view('backend.layouts.settings.dynamic_page.create');
         }
+        return redirect()->route('dynamic_page.index');
     }
 
-    public function store(Request $request) {
+    /**
+     * Store a newly created dynamic page in the database.
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function store(Request $request): RedirectResponse {
         try {
             if (User::find(auth()->user()->id)->hasPermissionTo('dynamic_page')) {
                 $validator = Validator::make($request->all(), [
@@ -82,14 +104,28 @@ class DynamicPageController extends Controller {
         }
     }
 
-    public function edit($id) {
+    /**
+     * Show the form for editing the specified dynamic page.
+     *
+     * @param int $id
+     * @return View|RedirectResponse
+     */
+    public function edit(int $id): View | RedirectResponse {
         if (User::find(auth()->user()->id)->hasPermissionTo('dynamic_page')) {
             $data = DynamicPage::find($id);
             return view('backend.layouts.settings.dynamic_page.edit', compact('data'));
         }
+        return redirect()->route('dynamic_page.index');
     }
 
-    public function update(Request $request, $id) {
+    /**
+     * Update the specified dynamic page in the database.
+     *
+     * @param Request $request
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function update(Request $request, int $id): RedirectResponse {
         try {
             if (User::find(auth()->user()->id)->hasPermissionTo('dynamic_page')) {
                 $validator = Validator::make($request->all(), [
@@ -113,9 +149,16 @@ class DynamicPageController extends Controller {
         } catch (Exception) {
             return redirect()->route('dynamic_page.index')->with('t-error', 'Dynamic Page failed to update');
         }
+        return redirect()->route('dynamic_page.index');
     }
 
-    public function status(int $id) {
+    /**
+     * Change the status of the specified dynamic page.
+     *
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function status(int $id): JsonResponse {
         $data = DynamicPage::findOrFail($id);
         if ($data->status == 'active') {
             $data->status = 'inactive';
@@ -138,12 +181,18 @@ class DynamicPageController extends Controller {
         }
     }
 
-    public function destroy($id) {
-        $page = DynamicPage::find($id);
-        if (!$page) {
-            return response()->json(['t-success' => false, 'message' => 'Page not found.']);
-        }
+    /**
+     * Remove the specified dynamic page from the database.
+     *
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function destroy(int $id): JsonResponse {
+        $page = DynamicPage::findOrFail($id);
         $page->delete();
-        return response()->json(['t-success' => true, 'message' => 'Deleted successfully.']);
+        return response()->json([
+            't-success' => true,
+            'message'   => 'Deleted successfully.',
+        ]);
     }
 }

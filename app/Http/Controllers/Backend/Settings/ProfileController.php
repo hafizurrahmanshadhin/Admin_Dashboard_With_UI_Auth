@@ -7,17 +7,31 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserDetail;
 use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\View\View;
 
 class ProfileController extends Controller {
+    /**
+     * Display the profile settings page.
+     *
+     * @return View
+     */
     public function showProfile() {
         $userDetails = UserDetail::where('user_id', Auth::id())->first();
         return view('backend.layouts.settings.profile_settings', ['userDetails' => $userDetails]);
     }
 
+    /**
+     * Update the user's profile information.
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function UpdateProfile(Request $request) {
         $validator = Validator::make($request->all(), [
             'name'  => 'nullable|max:100|min:2',
@@ -39,6 +53,12 @@ class ProfileController extends Controller {
         }
     }
 
+    /**
+     * Update the user's password.
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function UpdatePassword(Request $request) {
         $validator = Validator::make($request->all(), [
             'old_password' => 'required',
@@ -63,6 +83,12 @@ class ProfileController extends Controller {
         }
     }
 
+    /**
+     * Update the user's profile picture.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function UpdateProfilePicture(Request $request) {
         try {
             $request->validate([

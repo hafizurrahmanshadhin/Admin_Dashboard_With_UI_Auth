@@ -5,10 +5,17 @@ namespace App\Http\Controllers\Backend\Settings;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\View\View;
 
 class MailSettingController extends Controller {
+    /**
+     * Display the Mail settings page if the user has the 'mail_setting' permission.
+     *
+     * @return View|RedirectResponse
+     */
     public function index() {
         if (User::find(auth()->user()->id)->hasPermissionTo('mail_setting')) {
             return view('backend.layouts.settings.mail_settings');
@@ -16,6 +23,12 @@ class MailSettingController extends Controller {
         return redirect()->back();
     }
 
+    /**
+     * Update the Mail settings in the .env file if the user has the 'mail_setting' permission.
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function update(Request $request) {
         if (User::find(auth()->user()->id)->hasPermissionTo('mail_setting')) {
             $request->validate([

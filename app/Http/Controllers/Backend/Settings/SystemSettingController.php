@@ -6,15 +6,28 @@ use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\SystemSetting;
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\View\View;
 
 class SystemSettingController extends Controller {
+    /**
+     * Display the system settings page.
+     *
+     * @return View
+     */
     public function index() {
         $setting = SystemSetting::latest('id')->first();
         return view('backend.layouts.settings.system_settings', compact('setting'));
     }
 
+    /**
+     * Update the system settings.
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function update(Request $request) {
         $validator = Validator::make($request->all(), [
             'title'          => 'nullable',
