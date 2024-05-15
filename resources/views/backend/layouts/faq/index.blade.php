@@ -2,10 +2,6 @@
 
 @section('title', 'FAQ')
 
-@push('style')
-    <link href="https://cdn.datatables.net/v/bs5/dt-2.0.2/datatables.min.css" rel="stylesheet">
-@endpush
-
 @section('content')
     {{--  ========== title-wrapper start ==========  --}}
     <div class="title-wrapper pt-30">
@@ -69,8 +65,8 @@
 @endsection
 
 
+
 @push('script')
-    <script src="https://cdn.datatables.net/v/bs5/dt-2.0.2/datatables.min.js"></script>
     <script>
         $(document).ready(function() {
             $.ajaxSetup({
@@ -131,7 +127,7 @@
                             data: 'status',
                             name: 'status',
                             orderable: true,
-                            searchable: false
+                            searchable: true
                         },
                         {
                             data: 'action',
@@ -149,7 +145,6 @@
                 });
             }
         });
-
 
         // Status Change Confirm Alert
         function showStatusChangeAlert(id) {
@@ -187,10 +182,10 @@
                     } else {
                         toastr.error(resp.message);
                     }
-                }, // success end
+                },
                 error: function(error) {
                     // location.reload();
-                } // Error
+                }
             })
         }
 
@@ -211,7 +206,6 @@
                 }
             });
         }
-
 
         // Delete Button
         function deleteItem(id) {
@@ -236,10 +230,10 @@
                     } else {
                         toastr.error(resp.message);
                     }
-                }, // success end
+                },
                 error: function(error) {
                     // location.reload();
-                } // Error
+                }
             })
         }
     </script>

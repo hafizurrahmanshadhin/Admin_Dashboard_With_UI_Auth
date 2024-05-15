@@ -151,20 +151,21 @@ class FAQController extends Controller {
      */
     public function status(int $id): JsonResponse {
         $data = FAQ::findOrFail($id);
-
         if ($data->status == 'active') {
             $data->status = 'inactive';
             $data->save();
+
             return response()->json([
-                't-error'   => false,
+                'success' => false,
                 'message' => 'Unpublished Successfully.',
                 'data'    => $data,
             ]);
         } else {
             $data->status = 'active';
             $data->save();
+
             return response()->json([
-                't-success' => true,
+                'success' => true,
                 'message' => 'Published Successfully.',
                 'data'    => $data,
             ]);

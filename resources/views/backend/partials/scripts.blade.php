@@ -1,14 +1,11 @@
 <script src="{{ asset('backend/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('backend/js/fullcalendar.js') }}"></script>
 <script src="{{ asset('backend/js/main.js') }}"></script>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-{{-- Sweetalert --}}
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-{{-- toastr cdn --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="{{ asset('backend/js/jquery-3.7.1.js') }}" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+<script src="{{ asset('backend/js/datatables.min.js') }}"></script>
+<script src="{{ asset('backend/js/sweetalert2@11.js') }}"></script>
+<script src="{{ asset('backend/js/toastr.min.js') }}"></script>
 
 @stack('script')
 

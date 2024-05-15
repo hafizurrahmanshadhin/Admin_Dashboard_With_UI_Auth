@@ -2,10 +2,6 @@
 
 @section('title', 'Dynamic Page')
 
-@push('style')
-    <link href="https://cdn.datatables.net/v/bs5/dt-2.0.2/datatables.min.css" rel="stylesheet">
-@endpush
-
 @section('content')
     {{--  ========== title-wrapper start ==========  --}}
     <div class="title-wrapper pt-30">
@@ -69,12 +65,11 @@
     </div>
 @endsection
 
+
+
 @push('script')
-    <script src="https://cdn.datatables.net/v/bs5/dt-2.0.2/datatables.min.js"></script>
     <script>
         $(document).ready(function() {
-            var searchable = [];
-            var selectable = [];
             $.ajaxSetup({
                 headers: {
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -84,8 +79,8 @@
                 let dTable = $('#data-table').DataTable({
                     order: [],
                     lengthMenu: [
-                        [25, 50, 100, 200, 500, -1],
-                        [25, 50, 100, 200, 500, "All"]
+                        [10, 25, 50, 100, -1],
+                        [10, 25, 50, 100, "All"]
                     ],
                     processing: true,
                     responsive: true,
@@ -143,14 +138,53 @@
                 });
 
                 dTable.buttons().container().appendTo('#file_exports');
-
                 new DataTable('#example', {
                     responsive: true
                 });
             }
         });
 
+        // Status Change Confirm Alert
+        function showStatusChangeAlert(id) {
+            event.preventDefault();
 
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You want to update the status?',
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    statusChange(id);
+                }
+            });
+        }
+        // Status Change
+        function statusChange(id) {
+            let url = '{{ route('dynamic_page.status', ':id') }}';
+            $.ajax({
+                type: "GET",
+                url: url.replace(':id', id),
+                success: function(resp) {
+                    console.log(resp);
+                    // Reloade DataTable
+                    $('#data-table').DataTable().ajax.reload();
+                    if (resp.success === true) {
+                        // show toast message
+                        toastr.success(resp.message);
+                    } else if (resp.errors) {
+                        toastr.error(resp.errors[0]);
+                    } else {
+                        toastr.error(resp.message);
+                    }
+                },
+                error: function(error) {
+                    // location.reload();
+                }
+            });
+        }
 
         // delete Confirm
         function showDeleteConfirm(id) {
@@ -168,11 +202,11 @@
                     deleteItem(id);
                 }
             });
-        };
+        }
         // Delete Button
         function deleteItem(id) {
-            var url = '{{ route('dynamic_page.destroy', ':id') }}';
-            var csrfToken = '{{ csrf_token() }}';
+            let url = '{{ route('dynamic_page.destroy', ':id') }}';
+            let csrfToken = '{{ csrf_token() }}';
             $.ajax({
                 type: "DELETE",
                 url: url.replace(':id', id),
@@ -192,55 +226,11 @@
                     } else {
                         toastr.error(resp.message);
                     }
-                }, // success end
+                },
                 error: function(error) {
                     // location.reload();
-                } // Error
-            })
-        }
-
-
-        // Status Change Confirm Alert
-        function showStatusChangeAlert(id) {
-            event.preventDefault();
-
-            Swal.fire({
-                title: 'Are you sure?',
-                text: 'You want to update the status?',
-                icon: 'info',
-                showCancelButton: true,
-                confirmButtonText: 'Yes',
-                cancelButtonText: 'No',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    statusChange(id);
                 }
-            });
-        }
-
-        // Status Change
-        function statusChange(id) {
-            var url = '{{ route('dynamic_page.status', ':id') }}';
-            $.ajax({
-                type: "GET",
-                url: url.replace(':id', id),
-                success: function(resp) {
-                    console.log(resp);
-                    // Reloade DataTable
-                    $('#data-table').DataTable().ajax.reload();
-                    if (resp.success === true) {
-                        // show toast message
-                        toastr.success(resp.message);
-                    } else if (resp.errors) {
-                        toastr.error(resp.errors[0]);
-                    } else {
-                        toastr.error(resp.message);
-                    }
-                }, // success end
-                error: function(error) {
-                    // location.reload();
-                } // Erro
-            });
+            })
         }
     </script>
 @endpush

@@ -115,8 +115,8 @@ class DynamicPageController extends Controller {
         }
     }
 
-    public function status($id) {
-        $data = DynamicPage::where('id', $id)->first();
+    public function status(int $id) {
+        $data = DynamicPage::findOrFail($id);
         if ($data->status == 'active') {
             $data->status = 'inactive';
             $data->save();
