@@ -7,9 +7,24 @@
         .drop-custom {
             border-top-left-radius: 6px;
             border-bottom-left-radius: 6px;
-            padding: 10px;
-            border: 1px solid #788393;
-            color: #788393;
+            padding: 15px;
+            border: 1px solid #4CAF50;
+            color: #313131;
+            transition: all 0.3s ease;
+        }
+
+        .drop-custom:hover {
+            background-color: #414241;
+            color: white;
+        }
+
+        .btn {
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
         }
     </style>
 @endpush
@@ -57,14 +72,15 @@
                         @csrf
                         <div style="display: flex;justify-content: end;margin-bottom: 10px;">
                             <button class="btn btn-outline-secondary" type="button" onclick="addSocialField()"
-                                style="font-weight: 900">Add</button>
+                                style="font-weight: 900" title="Add a new social media field">Add</button>
                         </div>
                         <div id="social_media_container">
                             @foreach ($social_link as $index => $link)
                                 <div class="social_media input-group mb-3 dropdown">
                                     <input type="hidden" name="social_media_id[]" value="{{ $link->id }}">
                                     <select class="dropdown-toggle drop-custom" name="social_media[]"
-                                        value="@isset($social_link){{ $link->social_media }}@endisset">
+                                        value="@isset($social_link){{ $link->social_media }}@endisset"
+                                        title="Select a social media platform">
                                         <option class="dropdown-item">Select Social</option>
                                         <option class="dropdown-item" value="facebook"
                                             {{ $link->social_media == 'facebook' ? 'selected' : '' }}>Facebook
@@ -87,17 +103,20 @@
                                     </select>
                                     <input type="url" class="form-control" aria-label="Text input with dropdown button"
                                         name="profile_link[]"
-                                        value="@isset($social_link){{ $link->profile_link }}@endisset">
+                                        value="@isset($social_link){{ $link->profile_link }}@endisset"
+                                        placeholder="Enter the profile link here">
                                     <button class="btn btn-outline-secondary removeSocialBtn" type="button"
                                         onclick="removeSocialField(this)" style="font-weight: 900"
-                                        data-id="{{ $link->id }}">Remove</button>
+                                        data-id="{{ $link->id }}"
+                                        title="Remove this social media field">Remove</button>
                                 </div>
                             @endforeach
                         </div>
 
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                            <a href="{{ route('dashboard') }}" class="btn btn-danger me-2">Cancel</a>
+                            <button type="submit" class="btn btn-primary" title="Submit the form">Submit</button>
+                            <a href="{{ route('dashboard') }}" class="btn btn-danger me-2"
+                                title="Cancel and go back to the dashboard">Cancel</a>
                         </div>
                     </form>
                 </div>
@@ -200,7 +219,11 @@
                     }
                 },
                 error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Something went wrong. Please try again.",
+                    });
                 }
             });
         };
