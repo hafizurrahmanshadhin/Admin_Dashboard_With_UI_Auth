@@ -101,11 +101,12 @@ class DynamicPageController extends Controller {
                     return redirect()->back()->withErrors($validator)->withInput();
                 }
 
-                $data               = DynamicPage::findOrFail($id);
-                $data->page_title   = $request->page_title;
-                $data->page_slug    = Str::slug($request->page_title);
-                $data->page_content = $request->page_content;
-                $data->update();
+                $data = DynamicPage::findOrFail($id);
+                $data->update([
+                    'page_title'   => $request->page_title,
+                    'page_slug'    => Str::slug($request->page_title),
+                    'page_content' => $request->page_content,
+                ]);
 
                 return redirect()->route('dynamic_page.index')->with('t-success', 'Dynamic Page Updated Successfully.');
             }
