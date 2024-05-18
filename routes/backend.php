@@ -54,7 +54,7 @@ Route::middleware(['role:admin'])->group(function () {
     Route::post('/analytics-setting', [GoogleAnalyticsController::class, 'update'])->name('analytics.update');
 
     //! Route for Calendar
-    Route::view('/calender', 'backend.layouts.Settings.calendar')->name('calendar');
+    Route::view('/calender', 'backend.layouts.settings.calendar')->name('calendar');
 
     //! Route for FAQController Backend
     Route::controller(FAQController::class)->group(function () {
